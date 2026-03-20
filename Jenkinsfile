@@ -1,12 +1,17 @@
 pipeline {
     agent any
 
+    tools {
+        // IMPORTANT: "maven3" doit être le nom exact que vous avez donné à votre installation Maven dans "Administrer Jenkins -> Tools (ou Global Tool Configuration)"
+        maven 'maven3'
+    }
+
 
     stages {
         stage('Checkout') {
             steps {
-                // Checkout du code (si vous utilisez Git)
-                checkout scm
+                // Contournement : Puisque vous n'utilisez pas "Pipeline script from SCM", on lui donne directement le lien
+                git branch: 'main', url: 'https://github.com/Onisoa20/tp_jenkins.git'
             }
         }
 
@@ -38,9 +43,9 @@ pipeline {
         stage('Deploy to Nexus') {
             steps {
                 // Déploiement de l'artefact sur Nexus
-                // Soit vous avez configuré le settings.xml dans "Managed files" dans Jenkins, soit vous passez le user/pwd
+                // Utilise le settings.xml fraîchement créé qui pointe vers 'nexus-releases' et 'nexus-snapshots' du pom.xml
                 withCredentials([usernamePassword(credentialsId: 'nexus-credentials', passwordVariable: 'NEXUS_PWD', usernameVariable: 'NEXUS_USER')]) {
-                    sh 'mvn deploy -DaltDeploymentRepository=nexus::default::http://localhost:8081/repository/maven-releases/ -s settings.xml'
+                    sh 'mvn deploy -s settings.xml'
                 }
             }
         }
