@@ -1,0 +1,29 @@
+# Compiled class files
+target/
+*.class
+
+# Maven
+*.jar
+*.war
+*.ear
+
+# IDE files
+.idea/
+*.iml
+*.iws
+.vscode/
+.settings/
+.classpath
+.project
+.factorypath
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Spring Boot
+spring-shell.log
