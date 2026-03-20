@@ -1,16 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        // Optionnel : remplacez par le nom de l'installation Maven et JDK configurées dans Jenkins (Global Tool Configuration)
-        // maven 'maven3'
-        // jdk 'jdk21'
-    }
-
-    environment {
-        // Assurez-vous d'avoir créé deux credentials dans Jenkins de type "Secret text" (SonarQube) et "Username/Password" (Nexus)
-        SONAR_SCANNER_HOME = tool 'sonar-scanner' // Nom de l'outil SonarScanner dans Jenkins
-    }
 
     stages {
         stage('Checkout') {
@@ -29,9 +19,8 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                // IMPORTANT: Remplacez 'sonar' par le nom du serveur SonarQube configuré dans "Manage Jenkins -> System"
-                // Pour SonarQube, utilisez un Token d'authentification dans Jenkins plutôt que le mot de passe "Christinah1."
-                withSonarQubeEnv('sonar') {
+                // IMPORTANT: L'installation SonarQube dans Jenkins est configurée sous le nom "pipeline"
+                withSonarQubeEnv('pipeline') {
                     sh 'mvn sonar:sonar'
                 }
             }
