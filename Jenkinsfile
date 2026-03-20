@@ -17,23 +17,22 @@ pipeline {
 
         stage('Build & Unit Tests') {
             steps {
-                // Compilation du projet Spring Boot
-                sh 'mvn clean install'
+                // Compilation avec le settings.xml pour les accès
+                sh 'mvn clean install -s settings.xml'
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
-                // IMPORTANT: L'installation SonarQube dans Jenkins est configurée sous le nom "pipeline"
+                // 'pipeline' doit être le NOM du serveur dans Administrer Jenkins > System
                 withSonarQubeEnv('pipeline') {
-                    sh 'mvn sonar:sonar'
+                    sh 'mvn sonar:sonar -s settings.xml'
                 }
             }
         }
 
         stage('Quality Gate') {
             steps {
-                // Attend le résultat de SonarQube et arrête le build s'il y a trop de bugs
                 timeout(time: 1, unit: 'HOURS') {
                     waitForQualityGate abortPipeline: true
                 }
@@ -42,8 +41,6 @@ pipeline {
 
         stage('Deploy to Nexus') {
             steps {
-                // Déploiement de l'artefact sur Nexus
-                // Utilise le settings.xml fraîchement créé qui pointe vers 'nexus-releases' et 'nexus-snapshots' du pom.xml
                 withCredentials([usernamePassword(credentialsId: 'nexus-credentials', passwordVariable: 'NEXUS_PWD', usernameVariable: 'NEXUS_USER')]) {
                     sh 'mvn deploy -s settings.xml'
                 }
