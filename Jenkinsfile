@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        // IMPORTANT: "maven3" doit être le nom exact que vous avez donné à votre installation Maven dans "Administrer Jenkins -> Tools (ou Global Tool Configuration)"
-        maven 'maven3'
+        // Le nom de l'installation Maven configurée dans Jenkins est "Maven"
+        maven 'Maven'
     }
 
 
