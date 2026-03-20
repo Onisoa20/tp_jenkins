@@ -1,0 +1,22 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <servers>
+    <!-- Identifiants pour le déploiement sur Nexus -->
+    <server>
+      <id>nexus</id>
+      <username>admin</username>
+      <password>Christinah1.</password>
+    </server>
+
+    <!-- Optionnel : Identifiants pour SonarQube si vous lancez l'analyse depuis votre PC local -->
+    <server>
+      <id>sonar</id>
+      <!-- On utilise uniquement le Token généré, le mot de passe reste vide -->
+      <username>sqa_5120cba9e53ab0d2c4fb6c823b61a04e16130ace</username>
+      <password></password>
+    </server>
+  </servers>
+
+</settings>

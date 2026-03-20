@@ -1,6 +1,4 @@
-# Ignorer les fichiers de configuration contenant des mots de passe
-settings.xml
-settings-docker.xml
+# Retrait des exceptions pour permettre l'ajout du settings.xml au TP
 
 # Autres dossiers standards à ignorer pour Java/Maven
 target/
