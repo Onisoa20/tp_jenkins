@@ -27,7 +27,7 @@ pipeline {
                 // SOLUTION ROBUSTE : On utilise le Token directement dans la commande Maven 
                 // (Cela fonctionne même si le plugin SonarQube n'est pas installé dans Jenkins !)
                 withCredentials([string(credentialsId: 'pipeline_sonar', variable: 'SONAR_TOKEN')]) {
-                    sh "mvn sonar:sonar -s settings.xml -Dsonar.token=${SONAR_TOKEN} -Dsonar.host.url=http://localhost:9000"
+                    sh "mvn sonar:sonar -s settings.xml -Dsonar.token=${SONAR_TOKEN} -Dsonar.host.url=http://sonarqube:9000"
                 }
             }
         }
