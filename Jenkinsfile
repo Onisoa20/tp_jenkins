@@ -8,12 +8,14 @@ pipeline {
 
 
     stages {
+        /*
         stage('Checkout') {
             steps {
                 // Contournement : Puisque vous n'utilisez pas "Pipeline script from SCM", on lui donne directement le lien
                 git branch: 'main', url: 'https://github.com/Onisoa20/tp_jenkins.git'
             }
         }
+        */
 
         stage('Build & Unit Tests') {
             steps {
@@ -47,7 +49,7 @@ pipeline {
         stage('Deploy to Nexus') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'nexus-credentials', passwordVariable: 'NEXUS_PWD', usernameVariable: 'NEXUS_USER')]) {
-                    sh 'mvn deploy -s settings.xml'
+                    sh "mvn deploy -s settings.xml -Dnexus.user=${NEXUS_USER} -Dnexus.password=${NEXUS_PWD}"
                 }
             }
         }
