@@ -53,5 +53,23 @@ pipeline {
                 }
             }
         }
+
+        stage('Docker Build & Push') {
+            steps {
+                script {
+                    // Utilisation des credentials créés dans Jenkins
+                    withCredentials([usernamePassword(credentialsId: 'github_token', passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USER')]) {
+                        // Connexion à Docker Hub
+                        sh "echo ${DOCKER_HUB_PASSWORD} | docker login -u ${DOCKER_HUB_USER} --password-stdin"
+                        
+                        // Build de l'image
+                        sh "docker build -t ${DOCKER_HUB_USER}/tp-jenkins:latest ."
+                        
+                        // Push de l'image
+                        sh "docker push ${DOCKER_HUB_USER}/tp-jenkins:latest"
+                    }
+                }
+            }
+        }
     }
 }
